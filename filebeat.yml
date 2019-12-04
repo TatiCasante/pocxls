@@ -1,0 +1,15 @@
+filebeat.prospectors:
+- type: log
+  paths:
+    - /logs/* 
+  fields:
+    service: aplicacao-template
+  fields_under_root: true
+ 
+processors:
+ - drop_fields:
+     fields: ["offset", "prospector", "input", "beat.name", "beat.hostname"]
+
+output.logstash:
+   index: 'aplicacao-template'
+   hosts: ["10.90.0.12:5044"]

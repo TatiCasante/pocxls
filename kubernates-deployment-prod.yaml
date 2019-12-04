@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aplicacao-template
+  labels:
+    env: prod
+spec:
+  selector:
+    matchLabels:
+      run: aplicacao-template
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        run: aplicacao-template
+    spec:
+      containers:
+        - name: aplicacao-template
+          image: 10.90.0.30:8123/confidence/aplicacao-template/prod:latest
+          volumeMounts:
+            - mountPath: /mnt/
+              name: mnt
+            - mountPath: /logs/
+              name: logs
+          ports:
+            - name: http
+              containerPort: 8150
+          resources:
+            limits:
+              memory: "2048Mi"
+      imagePullPolicy: Always
+      imagePullSecrets:
+        - name: dockernexus
+      volumes:
+        - name: mnt
+          hostPath:
+            path: /mnt/
+            type: Directory
+        - name: logs
+          hostPath:
+            path: /logs/
+            type: Directory
+-------------------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: aplicacao-template
+  labels:
+    run: aplicacao-template
+spec:
+  type: LoadBalancer
+  externalIPs:
+    - 10.0.0.9
+  ports:
+    - port: 8150
+      protocol: TCP
+  selector:
+    run: aplicacao-template
