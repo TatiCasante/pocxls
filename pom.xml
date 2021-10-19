@@ -35,7 +35,7 @@
         <kafka-version>1.3.2.RELEASE</kafka-version>
         <io-jwt.version>0.7.0</io-jwt.version>
         <springfox-version>2.8.0</springfox-version>
-        <owasp-version>20180219.1</owasp-version>
+        <owasp-version>20211018.1</owasp-version>
         <commons-lang3.version>3.8</commons-lang3.version>
         <micrometer-version>1.0.6</micrometer-version>
         <auth-library.version>1.0.0</auth-library.version>
